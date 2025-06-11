@@ -1,0 +1,38 @@
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# Backend
+backend/target/
+backend/.mvn/
+backend/.env
+backend/.env.local
+*.iml
+*.class
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+
+# OS Stuff
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Lockfiles
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
