@@ -2,9 +2,10 @@ import LoginForm from "../auth/LoginForm";
 
 export default function LoginPage() {
   return (
-    <div>
-      <h1>Log In</h1>
-      <LoginForm />
+    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+      <div className="w-full max-w-sm">
+        <LoginForm />
+      </div>
     </div>
   );
 }
