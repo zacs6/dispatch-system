@@ -1,0 +1,31 @@
+import { useTabsStore } from "@/hooks/useTabsStore";
+import type { Tab } from "@/hooks/useTabsStore";
+
+import DashboardTab from "./DashboardTab";
+import ReportsTab from "./ReportsTab";
+
+export default function TabRenderer() {
+  const tabs = useTabsStore((state) => state.tabs);
+  const activeTabId = useTabsStore((state) => state.activeTabId);
+
+  function renderTabContent(tab: Tab) {
+    switch (tab.type) {
+      case "dashboard":
+        return <DashboardTab key={tab.id} />;
+      case "reports":
+        return <ReportsTab key={tab.id} />;
+      default:
+        return null;
+    }
+  }
+
+  return (
+    <div>
+      {tabs.map((tab) => (
+        <div key={tab.id} className={`${tab.id === activeTabId ? "" : "hidden"}`}>
+          {renderTabContent(tab)}
+        </div>
+      ))}
+    </div>
+  );
+}

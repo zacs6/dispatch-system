@@ -18,7 +18,7 @@ export default function LoginForm({ className, ...props }: React.ComponentProps<
     if (error) {
       setError(error.message);
     } else {
-      window.location.href = "/dashboard";
+      window.location.href = "/";
     }
   };
 

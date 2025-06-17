@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -11,29 +10,36 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { useTabsStore } from "@/hooks/useTabsStore";
+import type { Tab } from "@/hooks/useTabsStore";
 
-// Sample data
-const data = {
+type NavItem = {
+  title: string;
+  type: Tab["type"];
+};
+
+const data: {
+  navMain: {
+    title: string;
+    items: NavItem[];
+  }[];
+} = {
   navMain: [
     {
       title: "Dispatch",
-      url: "#",
       items: [
-        {
-          title: "Dashboard",
-          url: "/dashboard",
-          isActive: true,
-        },
-        {
-          title: "Reports",
-          url: "/reports",
-        },
+        { title: "Dashboard", type: "dashboard" },
+        { title: "Reports", type: "reports" },
       ],
     },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const tabs = useTabsStore((state) => state.tabs);
+  const activeTabId = useTabsStore((state) => state.activeTabId);
+  const updateCurrentTabType = useTabsStore((state) => state.updateCurrentTabType);
+
   return (
     <Sidebar {...props}>
       <SidebarContent>
@@ -44,8 +50,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenu>
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a href={item.url}>{item.title}</a>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={tabs.find((t) => t.id === activeTabId)?.type === item.type}
+                    >
+                      <a onClick={() => updateCurrentTabType(item.type)}>{item.title}</a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
