@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import supabase from "../../utils/supabase";
 
-import { AppSidebar } from "@/components/AppSidebar";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { AppShell, Group } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+
+import { NavbarSimple } from "@/components/Navbar";
 
 import TabsBar from "@/components/TabsBar";
 import TabRenderer from "./TabRenderer";
 
 export default function AppLayout() {
+  const [opened, { toggle }] = useDisclosure();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -31,14 +34,26 @@ export default function AppLayout() {
   }
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+    <AppShell
+      header={{ height: 60 }}
+      footer={{ height: 60 }}
+      navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
+      aside={{ width: 300, breakpoint: "md", collapsed: { desktop: false, mobile: true } }}
+      padding="md"
+    >
+      <AppShell.Header>
+        <Group h="100%" px="md">
           <TabsBar />
-        </header>
+        </Group>
+      </AppShell.Header>
+      <AppShell.Navbar p="md">
+        <NavbarSimple />
+      </AppShell.Navbar>
+      <AppShell.Main>
         <TabRenderer />
-      </SidebarInset>
-    </SidebarProvider>
+      </AppShell.Main>
+      {/* <AppShell.Aside p="md">Aside</AppShell.Aside> */}
+      <AppShell.Footer p="md">Dispatch System</AppShell.Footer>
+    </AppShell>
   );
 }

@@ -14,19 +14,20 @@ type TabsStore = {
   closeTab: (id: number) => void;
   setActiveTab: (id: number) => void;
   updateCurrentTabType: (newType: Tab["type"]) => void;
+  updateCurrentTabTitle: (newTitle: string) => void;
 };
 
 export const useTabsStore = create<TabsStore>((set) => ({
-  tabs: [],
+  tabs: [{ id: 1, title: "Dashboard", type: "dashboard" }],
   activeTabId: 1,
-  nextId: 1,
+  nextId: 2,
   addTab: (tab) => {
     set((state) => {
       if (state.tabs.length >= 5) return state;
 
       const newTab = {
         id: state.nextId,
-        title: `Tab ${state.nextId}`,
+        title: `${tab.charAt(0).toUpperCase() + tab.slice(1)}`,
         type: tab,
       };
 
@@ -63,6 +64,13 @@ export const useTabsStore = create<TabsStore>((set) => ({
     set((state) => ({
       tabs: state.tabs.map((tab) =>
         tab.id === state.activeTabId ? { ...tab, type: newType } : tab
+      ),
+    }));
+  },
+  updateCurrentTabTitle: (newTitle) => {
+    set((state) => ({
+      tabs: state.tabs.map((tab) =>
+        tab.id === state.activeTabId ? { ...tab, title: newTitle } : tab
       ),
     }));
   },
