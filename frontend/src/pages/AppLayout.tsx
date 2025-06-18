@@ -5,6 +5,7 @@ import supabase from "../../utils/supabase";
 import { AppShell, Group } from "@mantine/core";
 import { NavbarSimple } from "@/components/Navbar";
 import TabsBar from "@/components/TabsBar";
+import UserMenu from "@/components/UserMenu";
 import TabRenderer from "./TabRenderer";
 
 export default function AppLayout() {
@@ -38,8 +39,9 @@ export default function AppLayout() {
       padding="md"
     >
       <AppShell.Header>
-        <Group h="100%" px="md">
+        <Group h="100%" px="md" justify="space-between">
           <TabsBar />
+          <UserMenu />
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">
