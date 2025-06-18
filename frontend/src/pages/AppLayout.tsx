@@ -3,15 +3,11 @@ import { useNavigate } from "react-router";
 import supabase from "../../utils/supabase";
 
 import { AppShell, Group } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-
 import { NavbarSimple } from "@/components/Navbar";
-
 import TabsBar from "@/components/TabsBar";
 import TabRenderer from "./TabRenderer";
 
 export default function AppLayout() {
-  const [opened, { toggle }] = useDisclosure();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -37,8 +33,8 @@ export default function AppLayout() {
     <AppShell
       header={{ height: 60 }}
       footer={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
-      aside={{ width: 300, breakpoint: "md", collapsed: { desktop: false, mobile: true } }}
+      navbar={{ width: 300, breakpoint: "sm" }}
+      aside={{ width: 300, breakpoint: "md", collapsed: { desktop: true, mobile: true } }}
       padding="md"
     >
       <AppShell.Header>
@@ -52,7 +48,7 @@ export default function AppLayout() {
       <AppShell.Main>
         <TabRenderer />
       </AppShell.Main>
-      {/* <AppShell.Aside p="md">Aside</AppShell.Aside> */}
+      <AppShell.Aside p="md">Aside</AppShell.Aside>
       <AppShell.Footer p="md">Dispatch System</AppShell.Footer>
     </AppShell>
   );

@@ -22,7 +22,7 @@ export default function TabRenderer() {
   return (
     <div>
       {tabs.map((tab) => (
-        <div key={tab.id} style={{ display: tab.id === activeTabId ? "block" : "none " }}>
+        <div key={tab.id} style={{ display: tab.id === activeTabId ? "block" : "none" }}>
           {renderTabContent(tab)}
         </div>
       ))}
