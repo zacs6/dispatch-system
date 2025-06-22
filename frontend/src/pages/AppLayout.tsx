@@ -15,7 +15,7 @@ export default function AppLayout() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       if (!data.session) {
-        navigate("/login");
+        navigate("/auth");
       } else {
         setLoading(false);
       }

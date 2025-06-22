@@ -13,7 +13,7 @@ import { Notifications } from "@mantine/notifications";
 import { ModalsProvider } from "@mantine/modals";
 
 import AppLayout from "./pages/AppLayout.tsx";
-import LoginPage from "./pages/LoginPage.tsx";
+import AuthPage from "./pages/AuthPage.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <MantineProvider defaultColorScheme="dark">
@@ -22,7 +22,7 @@ createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AppLayout />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/auth" element={<AuthPage />} />
         </Routes>
       </BrowserRouter>
     </ModalsProvider>

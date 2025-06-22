@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import supabase from "../../utils/supabase";
 
 import {
@@ -13,20 +14,30 @@ import {
   TextInput,
   Title,
 } from "@mantine/core";
-import classes from "./LoginForm.module.css";
+import classes from "./AuthForm.module.css";
 
 export default function LoginForm() {
+  const navigate = useNavigate();
+  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      setError(error.message);
+    setError(null);
+    let result;
+
+    if (authMode === "login") {
+      result = await supabase.auth.signInWithPassword({ email, password });
     } else {
-      window.location.href = "/";
+      result = await supabase.auth.signUp({ email, password });
+    }
+
+    if (result.error) {
+      setError(result.error?.message);
+    } else {
+      navigate("/");
     }
   };
 
@@ -37,16 +48,23 @@ export default function LoginForm() {
       </Title>
 
       <Text className={classes.subtitle}>
-        Do not have an account yet? <Anchor>Create account</Anchor>
+        {authMode === "login" ? "Don't have an account? " : "Already have an account? "}
+        <Anchor
+          component="button"
+          onClick={() => setAuthMode((prev) => (prev === "login" ? "signup" : "login"))}
+        >
+          {authMode === "login" ? "Sign up" : "Log in"}
+        </Anchor>
       </Text>
 
       <Paper withBorder shadow="sm" p={22} mt={30} radius="md">
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleAuth}>
           <TextInput
             label="Email"
             placeholder="you@mantine.dev"
             required
             radius="md"
+            value={email}
             onChange={(e) => setEmail(e.currentTarget.value)}
           />
           <PasswordInput
@@ -55,6 +73,7 @@ export default function LoginForm() {
             required
             mt="md"
             radius="md"
+            value={password}
             onChange={(e) => setPassword(e.currentTarget.value)}
           />
           <Group justify="space-between" mt="lg">
@@ -64,7 +83,7 @@ export default function LoginForm() {
             </Anchor>
           </Group>
           <Button type="submit" fullWidth mt="xl" radius="md">
-            Sign in
+            {authMode === "login" ? "Log in" : "Sign up"}
           </Button>
         </form>
         {error && (
