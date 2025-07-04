@@ -9,6 +9,7 @@ type NavItem = {
 const data: NavItem[] = [
   { label: "Dashboard", type: "dashboard" },
   { label: "Reports", type: "reports" },
+  { label: "Settings", type: "settings" },
 ];
 
 export function Navbar() {

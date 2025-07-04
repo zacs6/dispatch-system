@@ -3,7 +3,7 @@ import { create } from "zustand";
 export type Tab = {
   id: number;
   title: string;
-  type: "dashboard" | "reports" | "profiles";
+  type: "dashboard" | "reports" | "settings";
 };
 
 type TabsStore = {
