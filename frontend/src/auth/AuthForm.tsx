@@ -28,9 +28,30 @@ export default function LoginForm({ className, ...props }: React.ComponentProps<
 
     if (result.error) {
       setError(result.error?.message);
-    } else {
-      navigate("/");
+      return;
     }
+
+    const userId = result.data.user?.id;
+
+    if (userId) {
+      const { error: profileError } = await supabase.from("profiles").insert({
+        id: userId,
+        first_name: "TBD",
+        last_name: "TBD",
+        callsign: "TBD",
+        department: "TBD",
+        status: "10-7",
+        role: "Officer",
+        is_approved: false,
+      });
+
+      if (profileError) {
+        setError(profileError?.message);
+        return;
+      }
+    }
+
+    navigate("/");
   };
 
   return (
