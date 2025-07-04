@@ -4,7 +4,7 @@ import supabase from "../utils/supabase";
 
 import { Navbar } from "@/components/Navbar";
 import TabsBar from "@/components/TabsBar";
-import UserMenuNew from "@/components/UserMenuNew";
+import UserMenu from "@/components/UserMenu";
 import TabRenderer from "./TabRenderer";
 import logo from "../assets/DispatchSystemLogo.svg";
 
@@ -44,7 +44,7 @@ export default function AppLayout() {
           <TabsBar />
         </div>
         <div className="ml-auto self-center mr-5">
-          <UserMenuNew />
+          <UserMenu />
         </div>
       </div>
       <div className="flex flex-row h-[calc(100vh-6.25rem)]">

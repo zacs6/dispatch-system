@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function UserMenuNew() {
+export default function UserMenu() {
   const navigate = useNavigate();
 
   async function handleLogout() {

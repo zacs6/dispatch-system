@@ -6,6 +6,7 @@ import CallCard from "@/components/CallCard";
 
 type UnitType = {
   id: string;
+  department: string;
   callsign: string;
   role: string;
   first_name: string;
@@ -20,6 +21,9 @@ type CallType = {
   status: string;
   created_at: string;
   updated_at: string;
+  attached_units: string[];
+  address: string;
+  call_code: string;
 };
 
 export default function DashboardTab() {
@@ -55,7 +59,7 @@ export default function DashboardTab() {
   return (
     <div className="flex flex-row justify-around items-center h-[calc(100vh-6.25rem)]">
       <div className="bg-[#0C1622] flex flex-col gap-2.5 ml-2 h-[96%] w-[26%] p-3 border border-[#314E67] rounded-md">
-        All Units
+        <span className="font-bold">All Units</span>
         <div>
           {units.map((unit) => (
             <UnitCard key={unit.id} {...unit} />
@@ -63,7 +67,7 @@ export default function DashboardTab() {
         </div>
       </div>
       <div className="bg-[#0C1622] flex flex-col gap-2.5 h-[96%] w-[26%] p-3 border border-[#314E67] rounded-md">
-        Recent Calls
+        <span className="font-bold">Recent Calls</span>
         <div>
           {calls.map((call) => (
             <CallCard key={call.id} {...call} />
@@ -71,15 +75,21 @@ export default function DashboardTab() {
         </div>
       </div>
       <div className="bg-[#0C1622] flex flex-col gap-2.5 mr-2 h-[96%] w-[45%] p-3 border border-[#314E67] rounded-md">
-        Call Management
+        <span className="font-bold">Call Management</span>
         <div className="flex flex-row gap-4">
           <div className="flex flex-col">
             <h1>Call Type</h1>
-            <input type="text" className="bg-[#0F1B2A] border border-[#314E67] p-1 rounded-md" />
+            <input
+              type="text"
+              className="bg-[#0F1B2A] border border-[#314E67] p-1 mt-1 rounded-md"
+            />
           </div>
           <div className="flex flex-col">
             <h1>Address</h1>
-            <input type="text" className="bg-[#0F1B2A] border border-[#314E67] p-1 rounded-md" />
+            <input
+              type="text"
+              className="bg-[#0F1B2A] border border-[#314E67] p-1 mt-1 rounded-md"
+            />
           </div>
         </div>
       </div>
