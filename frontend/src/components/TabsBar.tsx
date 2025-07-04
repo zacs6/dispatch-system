@@ -22,7 +22,7 @@ export default function TabsBar() {
               isActive ? "bg-[#182B42]" : "bg-[#0F1B2A]"
             }`}
           >
-            <span className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
+            <span className="text-sm absolute left-1/2 -translate-x-1/2 whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
               {tab.title}
             </span>
             <Button
