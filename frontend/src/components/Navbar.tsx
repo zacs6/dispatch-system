@@ -1,22 +1,17 @@
-import type { ComponentType } from "react";
 import { useTabsStore } from "@/hooks/useTabsStore";
 import type { Tab } from "@/hooks/useTabsStore";
-
-import { IconLayoutDashboard, IconFileDescription } from "@tabler/icons-react";
-import classes from "./Navbar.module.css";
 
 type NavItem = {
   label: string;
   type: Tab["type"];
-  icon: ComponentType<{ size?: number; stroke?: number; className?: string }>;
 };
 
 const data: NavItem[] = [
-  { label: "Dashboard", type: "dashboard", icon: IconLayoutDashboard },
-  { label: "Reports", type: "reports", icon: IconFileDescription },
+  { label: "Dashboard", type: "dashboard" },
+  { label: "Reports", type: "reports" },
 ];
 
-export function NavbarSimple() {
+export function Navbar() {
   const tabs = useTabsStore((state) => state.tabs);
   const activeTabId = useTabsStore((state) => state.activeTabId);
   const updateCurrentTabType = useTabsStore((state) => state.updateCurrentTabType);
@@ -27,7 +22,7 @@ export function NavbarSimple() {
 
   const links = data.map((item) => (
     <a
-      className={classes.link}
+      className="data-[active]:bg-[#182B42] data-[inactive]:bg-[#0F1B2A] w-[100%] cursor-pointer h-12 border rounded-md border-[#314E67] text-center content-center"
       data-active={activeTabType === item.type ? true : undefined}
       key={item.label}
       onClick={(event) => {
@@ -36,14 +31,13 @@ export function NavbarSimple() {
         updateCurrentTabTitle(item.label);
       }}
     >
-      <item.icon className={classes.linkIcon} stroke={1.5} />
-      <span>{item.label}</span>
+      {item.label}
     </a>
   ));
 
   return (
-    <nav className={classes.navbar}>
-      <div className={classes.navbarMain}>{links}</div>
+    <nav className="">
+      <div className="flex flex-col gap-5 p-6 items-center">{links}</div>
     </nav>
   );
 }

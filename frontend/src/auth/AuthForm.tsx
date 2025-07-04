@@ -1,22 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import supabase from "../../utils/supabase";
+import supabase from "../utils/supabase";
 
-import {
-  Anchor,
-  Button,
-  Checkbox,
-  Container,
-  Group,
-  Paper,
-  PasswordInput,
-  Text,
-  TextInput,
-  Title,
-} from "@mantine/core";
-import classes from "./AuthForm.module.css";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-export default function LoginForm() {
+export default function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
   const navigate = useNavigate();
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
@@ -42,56 +34,69 @@ export default function LoginForm() {
   };
 
   return (
-    <Container size={420} my={40}>
-      <Title ta="center" className={classes.title}>
-        Welcome back!
-      </Title>
-
-      <Text className={classes.subtitle}>
-        {authMode === "login" ? "Don't have an account? " : "Already have an account? "}
-        <Anchor
-          component="button"
-          onClick={() => setAuthMode((prev) => (prev === "login" ? "signup" : "login"))}
-        >
-          {authMode === "login" ? "Sign up" : "Log in"}
-        </Anchor>
-      </Text>
-
-      <Paper withBorder shadow="sm" p={22} mt={30} radius="md">
-        <form onSubmit={handleAuth}>
-          <TextInput
-            label="Email"
-            placeholder="you@mantine.dev"
-            required
-            radius="md"
-            value={email}
-            onChange={(e) => setEmail(e.currentTarget.value)}
-          />
-          <PasswordInput
-            label="Password"
-            placeholder="Your password"
-            required
-            mt="md"
-            radius="md"
-            value={password}
-            onChange={(e) => setPassword(e.currentTarget.value)}
-          />
-          <Group justify="space-between" mt="lg">
-            <Checkbox label="Remember me" />
-            <Anchor component="button" size="sm">
-              Forgot password?
-            </Anchor>
-          </Group>
-          <Button type="submit" fullWidth mt="xl" radius="md">
-            {authMode === "login" ? "Log in" : "Sign up"}
-          </Button>
-        </form>
-        {error && (
-          <Text c="red" size="sm" mt="sm" ta="center">
-            {error}
-          </Text>
-        )}
-      </Paper>
-    </Container>
+    <div className={cn("flex flex-col gap-6", className)} {...props}>
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            {authMode === "login" ? "Login to your account" : "Create an account"}
+          </CardTitle>
+          <CardDescription>
+            {authMode === "login"
+              ? "Enter your email below to login to your account"
+              : "Enter your email below to create an account"}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleAuth}>
+            <div className="flex flex-col gap-6">
+              <div className="grid gap-3">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="me@dispatch.dev"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.currentTarget.value)}
+                />
+              </div>
+              <div className="grid gap-3">
+                <div className="flex items-center">
+                  <Label htmlFor="password">Password</Label>
+                  <a
+                    href="#" // TODO: Forgot password functionality
+                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                  >
+                    {authMode === "login" ? "Forgot your password?" : ""}
+                  </a>
+                </div>
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.currentTarget.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-3">
+                <Button type="submit" className="w-full">
+                  {authMode === "login" ? "Login" : "Sign up"}
+                </Button>
+                {error && <h1 className="text-red-700">{error}</h1>}
+              </div>
+            </div>
+            <div className="mt-4 text-center text-sm">
+              {authMode === "login" ? "Don't have an account?" : "Already have an account?"}{" "}
+              <a
+                onClick={() => setAuthMode((prev) => (prev === "login" ? "signup" : "login"))}
+                className="underline underline-offset-4 cursor-pointer"
+              >
+                {authMode === "login" ? "Sign up" : "Log in"}
+              </a>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
