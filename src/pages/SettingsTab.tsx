@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import supabase from "../utils/supabase";
+import { loadUserProfile } from "../lib/profile";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,48 +12,24 @@ export default function SettingsTab() {
   const [department, setDepartment] = useState("");
 
   useEffect(() => {
-    async function loadUserProfile() {
+    async function fetchProfile() {
       const {
         data: { user },
-        error: userError,
       } = await supabase.auth.getUser();
 
-      if (userError) {
-        console.error("Error getting user session:", userError.message);
-        return;
-      }
+      if (!user) return;
 
-      if (!user) {
-        console.log("No user session found");
-        return;
-      }
-
-      const { data: profileData, error: profileError } = await supabase
-        .from("profiles")
-        .select("first_name, last_name, department, callsign")
-        .eq("id", user.id)
-        .single();
-
-      if (profileError) {
-        console.error("Error fetching user profile:", profileError.message);
-        return;
-      }
+      const profileData = await loadUserProfile(user.id);
 
       if (profileData) {
         setFirstName(profileData.first_name || "");
         setLastName(profileData.last_name || "");
         setDepartment(profileData.department || "");
         setCallsign(profileData.callsign || "");
-      } else {
-        console.log("No profile found for this user");
-        setFirstName("");
-        setLastName("");
-        setDepartment("");
-        setCallsign("");
       }
     }
 
-    loadUserProfile();
+    fetchProfile();
   }, []);
 
   async function handleSave(e: React.FormEvent) {
@@ -92,7 +69,7 @@ export default function SettingsTab() {
               First Name
               <Input
                 className="bg-[#0F1B2A] border border-[#314E67] p-1 mt-1 rounded-md"
-                type="firstName"
+                type="text"
                 placeholder="John"
                 value={firstName}
                 onChange={(e) => setFirstName(e.currentTarget.value)}
@@ -102,7 +79,7 @@ export default function SettingsTab() {
               Last Name
               <Input
                 className="bg-[#0F1B2A] border border-[#314E67] p-1 mt-1 rounded-md"
-                type="lastName"
+                type="text"
                 placeholder="Doe"
                 value={lastName}
                 onChange={(e) => setLastName(e.currentTarget.value)}
@@ -112,7 +89,7 @@ export default function SettingsTab() {
               Department
               <Input
                 className="bg-[#0F1B2A] border border-[#314E67] p-1 mt-1 rounded-md"
-                type="department"
+                type="text"
                 placeholder="DSPD"
                 value={department}
                 onChange={(e) => setDepartment(e.currentTarget.value)}
@@ -122,7 +99,7 @@ export default function SettingsTab() {
               Callsign
               <Input
                 className="bg-[#0F1B2A] border border-[#314E67] p-1 mt-1 rounded-md"
-                type="callsign"
+                type="text"
                 placeholder="123"
                 value={callsign}
                 onChange={(e) => setCallsign(e.currentTarget.value)}
