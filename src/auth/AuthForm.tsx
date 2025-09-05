@@ -7,6 +7,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 export default function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
   const navigate = useNavigate();
@@ -14,6 +25,20 @@ export default function LoginForm({ className, ...props }: React.ComponentProps<
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [resetEmail, setResetEmail] = useState("");
+
+  const handleResetPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: "/auth",
+    });
+
+    if (error) {
+      toast(error?.message);
+      return;
+    } else {
+      toast("Success!");
+    }
+  };
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,14 +111,52 @@ export default function LoginForm({ className, ...props }: React.ComponentProps<
                 />
               </div>
               <div className="grid gap-3">
-                <div className="flex items-center">
+                <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#" // TODO: Forgot password functionality
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    {authMode === "login" ? "Forgot your password?" : ""}
-                  </a>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <a className="ml-auto inline-block text-sm underline-offset-4 hover:underline cursor-pointer">
+                        {authMode === "login" ? "Forgot your password?" : ""}
+                      </a>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle>Reset your password</DialogTitle>
+                        <DialogDescription>
+                          Enter your email to reset your password.
+                        </DialogDescription>
+                      </DialogHeader>
+
+                      <div>
+                        <div className="grid gap-3">
+                          <Label htmlFor="resetEmail">Email</Label>
+                          <Input
+                            id="resetEmail"
+                            type="email"
+                            value={resetEmail}
+                            onChange={(e) => setResetEmail(e.target.value)}
+                            required
+                          />
+                        </div>
+                        <DialogFooter>
+                          <div className="flex flex-col items-end">
+                            <div className="m-4 mr-0">
+                              <DialogClose asChild>
+                                <Button variant="outline">Cancel</Button>
+                              </DialogClose>
+                              <Button
+                                type="button"
+                                className="ml-2"
+                                onClick={() => handleResetPassword(resetEmail)}
+                              >
+                                Submit
+                              </Button>
+                            </div>
+                          </div>
+                        </DialogFooter>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
                 <Input
                   id="password"
