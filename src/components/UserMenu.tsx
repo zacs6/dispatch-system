@@ -55,15 +55,15 @@ export default function UserMenu() {
         className="w-56 bg-[#0F1B2A] border-[#314E67] text-white mr-5"
         align="start"
       >
-        <DropdownMenuItem className="cursor-pointer focus:bg-[#264263] focus:text-white transition duration-300 ease-in-out">
+        <DropdownMenuItem className="cursor-pointer focus:bg-[#314E67] focus:text-white transition duration-300 ease-in-out">
           Your Profile
         </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer focus:bg-[#264263] focus:text-white transition duration-300 ease-in-out">
+        <DropdownMenuItem className="cursor-pointer focus:bg-[#314E67] focus:text-white transition duration-300 ease-in-out">
           Settings
         </DropdownMenuItem>
         <DropdownMenuSeparator className="bg-[#314E67]" />
         <DropdownMenuItem
-          className="cursor-pointer focus:bg-[#264263] focus:text-white transition duration-300 ease-in-out"
+          className="cursor-pointer focus:bg-[#314E67] focus:text-white transition duration-300 ease-in-out"
           onClick={() => handleLogout()}
         >
           Log out
