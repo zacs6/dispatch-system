@@ -17,7 +17,7 @@ type Report = {
   attached_units: number[];
 };
 
-export default function ReportTab(id: number) {
+export default function ReportTab() {
   const [report, setReport] = useState<{ id: number; data: Report }[]>([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -41,8 +41,8 @@ export default function ReportTab(id: number) {
     }
   }
 
-  async function saveReport(id: number, title: string, content: string, location: string) {
-    console.log(id, title, content, location);
+  async function saveReport(title: string, content: string, location: string) {
+    console.log(title, content, location);
   }
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function ReportTab(id: number) {
         <div className="flex flex-row gap-3 h-full">
           <div className="flex flex-col gap-3 w-full h-full">
             <Button
-              onClick={() => saveReport(id, title, content, location)}
+              onClick={() => saveReport(title, content, location)}
               className="bg-green-700 w-[4vw]"
             >
               Save
