@@ -85,12 +85,12 @@ export default function LoginForm({ className, ...props }: React.ComponentProps<
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
+      <Card className="bg-[#0C1622] border-none">
         <CardHeader>
-          <CardTitle>
+          <CardTitle className="text-white">
             {authMode === "login" ? "Login to your account" : "Create an account"}
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-gray-200">
             {authMode === "login"
               ? "Enter your email below to login to your account"
               : "Enter your email below to create an account"}
@@ -100,7 +100,9 @@ export default function LoginForm({ className, ...props }: React.ComponentProps<
           <form onSubmit={handleAuth}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-white">
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -108,11 +110,14 @@ export default function LoginForm({ className, ...props }: React.ComponentProps<
                   required
                   value={email}
                   onChange={(e) => setEmail(e.currentTarget.value)}
+                  className="text-white border-[#314E67]"
                 />
               </div>
               <div className="grid gap-3">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password" className="text-white">
+                    Password
+                  </Label>
                   <Dialog>
                     <DialogTrigger asChild>
                       <a className="ml-auto inline-block text-sm underline-offset-4 hover:underline cursor-pointer">
@@ -164,16 +169,20 @@ export default function LoginForm({ className, ...props }: React.ComponentProps<
                   required
                   value={password}
                   onChange={(e) => setPassword(e.currentTarget.value)}
+                  className="text-white border-[#314E67]"
                 />
               </div>
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full">
+                <Button
+                  type="submit"
+                  className="w-full h-full cursor-pointer bg-[#0B63AF] hover:bg-[#084982] border-2 border-[#084982]"
+                >
                   {authMode === "login" ? "Login" : "Sign up"}
                 </Button>
                 {error && <h1 className="text-red-700">{error}</h1>}
               </div>
             </div>
-            <div className="mt-4 text-center text-sm">
+            <div className="mt-4 text-center text-sm text-white">
               {authMode === "login" ? "Don't have an account?" : "Already have an account?"}{" "}
               <a
                 onClick={() => setAuthMode((prev) => (prev === "login" ? "signup" : "login"))}

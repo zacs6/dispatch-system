@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import supabase from "../utils/supabase";
 import { loadUserProfile } from "../lib/profile";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 export default function SettingsTab() {
   const [firstName, setFirstName] = useState("");
@@ -57,6 +57,10 @@ export default function SettingsTab() {
     if (error) {
       console.error("Error updating profile:", error.message);
     }
+
+    toast("Changes saved!");
+
+    // TODO: Refresh user menu icon
   }
 
   return (
@@ -105,7 +109,12 @@ export default function SettingsTab() {
                 onChange={(e) => setCallsign(e.currentTarget.value)}
               />
             </div>
-            <Button type="submit">Save</Button>
+            <Button
+              type="submit"
+              className="cursor-pointer bg-[#0B63AF] hover:bg-[#084982] border-2 border-[#084982]"
+            >
+              Save
+            </Button>
           </form>
         </div>
       </div>

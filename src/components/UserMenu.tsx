@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import supabase from "../utils/supabase";
 import { loadUserProfile } from "../lib/profile";
+import { useTabsStore } from "@/hooks/useTabsStore";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,10 +44,18 @@ export default function UserMenu() {
     }
   }
 
+  const updateCurrentTabType = useTabsStore((state) => state.updateCurrentTabType);
+  const updateCurrentTabTitle = useTabsStore((state) => state.updateCurrentTabTitle);
+
+  const updateTab = (type: "dashboard" | "reports" | "departments" | "settings", label: string) => {
+    updateCurrentTabType(type);
+    updateCurrentTabTitle(label);
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="h-[50px] w-[50px] rounded-full bg-[#0F1B2A] border border-[#314E67] cursor-pointer text-center content-center">
+        <div className="select-none h-[50px] w-[50px] rounded-full bg-[#0F1B2A] border border-[#314E67] cursor-pointer text-center content-center">
           {firstName.charAt(0)}
           {lastName.charAt(0)}
         </div>
@@ -58,7 +67,12 @@ export default function UserMenu() {
         <DropdownMenuItem className="cursor-pointer focus:bg-[#314E67] focus:text-white transition duration-300 ease-in-out">
           Your Profile
         </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer focus:bg-[#314E67] focus:text-white transition duration-300 ease-in-out">
+        <DropdownMenuItem
+          onClick={() => {
+            updateTab("settings", "Settings");
+          }}
+          className="cursor-pointer focus:bg-[#314E67] focus:text-white transition duration-300 ease-in-out"
+        >
           Settings
         </DropdownMenuItem>
         <DropdownMenuSeparator className="bg-[#314E67]" />
