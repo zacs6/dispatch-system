@@ -3,6 +3,8 @@ import type { Tab } from "@/hooks/useTabsStore";
 
 import DashboardTab from "./DashboardTab";
 import ReportsTab from "./ReportsTab";
+import ReportTab from "./ReportTab";
+import UnitsTab from "./UnitsTab";
 import DepartmentsTab from "./DepartmentsTab";
 import SettingsTab from "./SettingsTab";
 
@@ -16,6 +18,10 @@ export default function TabRenderer() {
         return <DashboardTab key={tab.id} />;
       case "reports":
         return <ReportsTab key={tab.id} />;
+      case "report":
+        return <ReportTab key={tab.id} />;
+      case "units":
+        return <UnitsTab key={tab.id} />;
       case "departments":
         return <DepartmentsTab key={tab.id} />;
       case "settings":

@@ -9,8 +9,9 @@ type NavItem = {
 const data: NavItem[] = [
   { label: "Dashboard", type: "dashboard" },
   { label: "Reports", type: "reports" },
+  { label: "Report [Test]", type: "report" },
+  { label: "Units", type: "units" },
   { label: "Departments", type: "departments" },
-  { label: "Settings", type: "settings" },
 ];
 
 export function Navbar() {
@@ -39,7 +40,7 @@ export function Navbar() {
 
   return (
     <nav className="">
-      <div className="flex flex-col gap-5 p-6 items-center">{links}</div>
+      <div className="flex flex-col gap-4 p-6 items-center select-none">{links}</div>
     </nav>
   );
 }

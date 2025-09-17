@@ -10,7 +10,7 @@ export default function TabsBar() {
   const activeTabId = useTabsStore((state) => state.activeTabId);
 
   return (
-    <div className="flex flex-row content-center items-center gap-4 h-25">
+    <div className="flex flex-row content-center items-center gap-4 h-25 select-none">
       {tabs.map((tab) => {
         const isActive = tab.id === activeTabId;
 
@@ -28,7 +28,7 @@ export default function TabsBar() {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-1 size-8 cursor-pointer hover:bg-[#314E67] hover:text-white"
+              className="absolute right-1.5 size-6 cursor-pointer hover:bg-[#314E67] hover:text-white"
               onClick={(e) => {
                 e.stopPropagation();
                 closeTab(tab.id);
